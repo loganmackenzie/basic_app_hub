@@ -65,21 +65,17 @@ export function renderTodos() {
     row.draggable = true;
     row.dataset.id = todo.id;
 
-    // <div class="drag-handle">☰</div>
     row.innerHTML = `
-
       <input
         class="todo-checkbox"
         type="checkbox"
         ${todo.completed ? "checked" : ""}
       />
-
       <input
         class="todo-text ${todo.completed ? "completed" : ""}"
         value="${todo.text}"
         readonly
       />
-
       <div class="actions">
         <button class="edit-btn">✏️</button>
         <button class="delete-btn">🗑️</button>
@@ -104,7 +100,6 @@ export function renderTodos() {
     }
 
     input.addEventListener("blur", finishEdit);
-
     input.addEventListener("keydown", async (e) => {
       if (e.key === "Enter") {
         await finishEdit();
@@ -119,17 +114,14 @@ export function renderTodos() {
       draggedId = todo.id;
       row.classList.add("dragging");
     });
-
     row.addEventListener("dragend", async () => {
       row.classList.remove("dragging");
       await saveOrdering();
       renderTodos();
     });
-
     row.addEventListener("dragover", (e) => {
       e.preventDefault();
     });
-
     row.addEventListener("drop", () => {
       moveTodo(draggedId, todo.id);
       renderTodos();
